@@ -55,7 +55,7 @@
                 pushLocationToFirebase(latitude, longitude);
                 setInterval(UpdateLocation(latitude, longitude),40000);
     
-               UpdateLocation(latitude, longitude);
+               //UpdateLocation(latitude, longitude);
                 document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
             }, function(error) {
                 switch(error.code) {
