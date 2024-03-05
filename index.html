@@ -1,4 +1,3 @@
-index4.html
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,36 +46,41 @@ index4.html
         }
     }
     
-    if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-            
-            pushLocationToFirebase(latitude, longitude);
-            setInterval(UpdateLocation(latitude, longitude), 1000);
-
-           UpdateLocation(latitude, longitude);
-            document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
-        }, function(error) {
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    alert("User denied the request for Geolocation.");
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    alert("Location information is unavailable.");
-                    break;
-                case error.TIMEOUT:
-                    alert("The request to get user location timed out.");
-                    break;
-                case error.UNKNOWN_ERROR:
-                    alert("An unknown error occurred.");
-                    break;
-            }
-        });
-    } else {
-        // Geolocation not supported
-        alert("Geolocation is not supported by this browser.");
+    function getLocation() {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+                
+                pushLocationToFirebase(latitude, longitude);
+                setInterval(UpdateLocation(latitude, longitude), 1000);
+    
+               UpdateLocation(latitude, longitude);
+                document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+            }, function(error) {
+                switch(error.code) {
+                    case error.PERMISSION_DENIED:
+                        alert("User denied the request for Geolocation. Please enable it in your browser settings to continue.");
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        alert("Location information is unavailable.");
+                        break;
+                    case error.TIMEOUT:
+                        alert("The request to get user location timed out.");
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        alert("An unknown error occurred.");
+                        break;
+                }
+            });
+        } else {
+            // Geolocation not supported
+            alert("Geolocation is not supported by this browser.");
+        }
     }
+
+    getLocation(); // Call the function to request geolocation when the page loads
+
 </script>
 
 <div id="location"></div>
